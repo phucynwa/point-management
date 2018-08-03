@@ -1,0 +1,23 @@
+<tr>
+  <th scope="row"><%= course.name %></th>
+  <td><%= course.lecture.name %></td>
+  <td><%= course.semester.name %></td>
+  <td><%= course.semester.school_year.year %></td>
+  <td><%= course.user.name %></td>
+  <td>
+    <% if (learning = current_user.learning?(course)).present? %>
+      <%= button_to learning_path(learning), method: :delete,
+        class: "btn btn-danger" do %>
+        Remove&nbsp;
+        <span class="glyphicon glyphicon-remove"></span>
+      <% end %>
+    <% else %>
+      <%= button_to learnings_path, method: :post,
+        params: {course_id: course.id, user_id: current_user.id},
+        class: "btn btn-primary" do %>
+        Register&nbsp;
+        <span class="glyphicon glyphicon-ok"></span>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

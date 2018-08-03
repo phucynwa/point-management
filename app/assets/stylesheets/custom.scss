@@ -6,11 +6,16 @@ input {
 }
 
 #body {
- margin-top: 50px;
+ margin: 70px 0 70px;
 }
 
 .gravatar {
   border-radius: 50%;
-  margin: -11px;
-  margin-right: 5px;
+}
+
+.dropdown-toggle {
+  .gravatar {
+    margin: -11px;
+    margin-right: 5px;
+  }
 }

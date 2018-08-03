@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   before_action :load_user, except: %i(new create)
 
-  def show; end
+  def show
+    @learnings = Learning.by_student @user.id
+  end
 
   def new
     @user = User.new

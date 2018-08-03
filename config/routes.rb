@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get "signup", to: "users#new"
   post "signup", to: "users#create"
   resources :users, except: %i(index destroy)
+  resources :courses, only: :index
+  resources :learnings, except: %i(edit update)
 end

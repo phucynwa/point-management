@@ -12,7 +12,19 @@
 
 ActiveRecord::Schema.define(version: 2018_08_03_061440) do
 
-  create_table "course_students", force: :cascade do |t|
+  create_table "courses", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.integer "lecture_id"
+    t.integer "semester_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lecture_id"], name: "index_courses_on_lecture_id"
+    t.index ["semester_id"], name: "index_courses_on_semester_id"
+    t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "learnings", force: :cascade do |t|
     t.integer "user_id"
     t.integer "course_id"
     t.float "midterm_point"
@@ -20,18 +32,8 @@ ActiveRecord::Schema.define(version: 2018_08_03_061440) do
     t.float "summary_point"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_students_on_course_id"
-    t.index ["user_id"], name: "index_course_students_on_user_id"
-  end
-
-  create_table "courses", force: :cascade do |t|
-    t.string "name"
-    t.integer "users_id"
-    t.integer "lectures_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lectures_id"], name: "index_courses_on_lectures_id"
-    t.index ["users_id"], name: "index_courses_on_users_id"
+    t.index ["course_id"], name: "index_learnings_on_course_id"
+    t.index ["user_id"], name: "index_learnings_on_user_id"
   end
 
   create_table "lectures", force: :cascade do |t|

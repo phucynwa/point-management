@@ -8,6 +8,7 @@ gem "bootstrap-kaminari-views"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "bcrypt", "3.1.12"
 gem "jquery-rails"
+gem "kaminari"
 gem "rails", "~> 5.2.0"
 gem "sqlite3"
 gem "puma", "~> 3.11"

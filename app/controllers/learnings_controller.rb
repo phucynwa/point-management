@@ -1,0 +1,36 @@
+class LearningsController < ApplicationController
+  before_action :load_learning, only: :destroy
+  def create
+    @learning = Learning.new learning_params
+    if @learning.save
+      flash[:success] = "Successful !"
+      redirect_to courses_path
+    else
+      flash.now[:warning] = "Fail !"
+      render courses_path
+    end
+  end
+
+  def destroy
+    if @learning.destroy
+      flash[:success] = "Successful !"
+      redirect_to courses_path
+    else
+      flash[:danger] = "Fail !"
+      redirect_to courses_path
+    end
+  end
+
+  private
+
+  def learning_params
+    params.permit :course_id, :user_id
+  end
+
+  def load_learning
+    @learning = Learning.find_by id: params[:id]
+    return if @learning
+    flash[:danger] = "Invalid !"
+    redirect_to courses_path
+  end
+end

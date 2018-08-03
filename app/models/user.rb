@@ -2,13 +2,13 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   enum role: [:student, :teacher]
 
-  has_many :learning, dependent: :destroy
+  has_many :learnings, dependent: :destroy
   has_secure_password
 
   attr_accessor :remember_token
 
-  validates :name, :email, :code, :password, presence: true
-  validates :email, :code, uniqueness: {case_sensitive: false}
+  validates :name, :email, :password, presence: true
+  validates :email, uniqueness: {case_sensitive: false}
   validates :email, format: {with: VALID_EMAIL_REGEX}
 
   before_save :downcase_email
@@ -26,6 +26,10 @@ class User < ApplicationRecord
 
   def forget
     update_attributes remember_digest: User.digest(remember_token)
+  end
+
+  def learning? course
+    self.learnings.find_by course_id: course.id
   end
 
   class << self
