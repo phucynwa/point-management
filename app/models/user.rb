@@ -5,7 +5,9 @@ class User < ApplicationRecord
   has_many :learning, dependent: :destroy
   has_secure_password
 
-  validates :name, :phone, :email, :password, presence: true
+  validates :name, :email, :code, :password, presence: true
+  validates :email, :code, uniqueness: {case_sensitive: false}
+  validates :email, format: {with: VALID_EMAIL_REGEX}
 
   before_save :downcase_email
 
