@@ -5,11 +5,40 @@ class User < ApplicationRecord
   has_many :learning, dependent: :destroy
   has_secure_password
 
+  attr_accessor :remember_token
+
   validates :name, :email, :code, :password, presence: true
   validates :email, :code, uniqueness: {case_sensitive: false}
   validates :email, format: {with: VALID_EMAIL_REGEX}
 
   before_save :downcase_email
+
+  def authenticated? attribute, token
+    digest = send "#{attribute}_digest"
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password? token
+  end
+
+  def remember
+    self.remember_token = User.new_token
+    update_attributes remember_digest: User.digest(remember_token)
+  end
+
+  def forget
+    update_attributes remember_digest: User.digest(remember_token)
+  end
+
+  class << self
+    def digest string
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+        BCrypt::Engine.cost
+      BCrypt::Password.create string, cost: cost
+    end
+
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
+  end
 
   private
 
