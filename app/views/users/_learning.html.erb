@@ -1,0 +1,15 @@
+<tr>
+  <td><%= learning.course.name %></td>
+  <td><%= learning.course.lecture.name %></td>
+  <td>
+    <%= learning.course.semester.name %> -
+    <%= learning.course.semester.school_year.year %>
+  </td>
+  <td><%= learning.midterm_point ||= "Not exist" %></td>
+  <td><%= learning.final_point ||= "Not exist" %></td>
+  <td><%= learning.summary_point ||= "Not exist" %></td>
+  <td>
+    <%= button_to "Remove", learning_path(learning), method: :delete,
+        class: "btn btn-danger" %>
+  </td>
+</tr>

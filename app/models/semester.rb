@@ -1,3 +1,4 @@
 class Semester < ApplicationRecord
-  belongs_to :schoo_year
+  belongs_to :school_year
+  has_many :courses
 end
