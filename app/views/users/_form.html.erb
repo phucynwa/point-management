@@ -15,11 +15,11 @@
 
   <%= f.label :password %>
   <%= f.password_field :password, class: "form-control",
-  placeholder: "Password" %>
+    placeholder: "Password" %>
 
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation, class: "form-control",
-  placeholder: :password_confirmation %>
+    placeholder: :password_confirmation %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
