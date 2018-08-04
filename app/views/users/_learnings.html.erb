@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-md-1">Course</th>
+      <th class="col-md-3">Lecture</th>
+      <th class="col-md-1">Semester</th>
+      <th class="col-md-2">Year</th>
+      <% if current_user? @user %>
+        <th class="col-md-1">Mid.</th>
+        <th class="col-md-1">Fin.</th>
+        <th class="col-md-1">Sum.</th>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% learnings.order(id: :desc).each do |learning| %>
+    <%= render "learning", learning: learning %>
+    <% end %>
+  </tbody>
+</table>
