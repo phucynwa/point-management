@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   before_action :load_course, only: :show
 
   def index
-    @courses = Course.by_created.page(params[:page]).per 10
+    @courses = Course.by_created.page(params[:page]).per 20
   end
 
   def show

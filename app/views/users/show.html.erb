@@ -8,11 +8,17 @@
       <li class="list-group-item">
         <span class="glyphicon glyphicon-user"></span>
         <% if @user.student? %>
-          &nbsp; Student [<%= @user.code %>]
+          &nbsp; Student
         <% else %>
           &nbsp; Teacher
         <% end %>
       </li>
+      <% if @user.student? %>
+        <li class="list-group-item">
+          <span class="glyphicon glyphicon-qrcode"></span>
+          &nbsp; <%= @user.code %>
+        </li>
+      <% end %>
       <li class="list-group-item">
         <span class="glyphicon glyphicon-envelope"></span>
         &nbsp; <%= @user.email %>
@@ -24,45 +30,23 @@
   </div>
   <div class="col-md-9">
     <% if @user.teacher? %>
-      <h3>Teaching</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Course</th>
-            <th>Lecture</th>
-            <th>Teacher</th>
-            <th>Semester</th>
-            <th>School Year</th>
-            <th>Numerator</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render @user.courses.order(semester_id: :desc) %>
-        </tbody>
-      </table>
+      <h3><span class="glyphicon glyphicon-briefcase"></span> Teaching</h3>
+      <%= render "courses", courses: courses %>
     <% else %>
-      <h3>Learning</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Course</th>
-            <th>Lecture</th>
-            <th>Semester</th>
-            <th>School Year</th>
-            <% if current_user? @user %>
-              <th>Midterm</th>
-              <th>Final</th>
-              <th>Summary</th>
-              <th></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <% @user.learnings.order(id: :desc).each do |learning| %>
-            <%= render "learning", learning: learning %>
-          <% end %>
-        </tbody>
-      </table>
+      <h3><span class="glyphicon glyphicon-education"></span> Learning</h3>
+      <%= render "learnings", learnings: @user.learnings %>
+      <hr>
+      <% SchoolYear.all.order(year: :desc).each do |school_year| %>
+        <h3>
+          <span class="glyphicon glyphicon-calendar"></span>
+          <%= full_school_year school_year.year %>
+        </h3>
+        <% school_year.semesters.each do |semester| %>
+          <h4><%= semester.name %></h4>
+          <%= render "learnings", learnings: semester.learnings.where(user_id:
+            @user.id) %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>

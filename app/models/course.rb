@@ -3,6 +3,8 @@ class Course < ApplicationRecord
   belongs_to :user
   belongs_to :lecture
   has_many :learnings
+  has_many :users, through: :learnings
+
   scope :by_created, ->{order created_at: :desc}
   scope :by_time, ->{order semester_id: :desc}
 
