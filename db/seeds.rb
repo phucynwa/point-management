@@ -8,14 +8,42 @@
 
 User.create! name: "Phung Thi An",
   email: "admin@gmail.com",
+  code: 0,
   role: 1,
+  birthday: Faker::Date.birthday(27, 45),
   password: "123123",
   password_confirmation: "123123"
+
+User.create! name: "Vu Van Tuan",
+  email: "boss@gmail.com",
+  code: 1,
+  role: 1,
+  birthday: Faker::Date.birthday(27, 45),
+  password: "123123",
+  password_confirmation: "123123"
+
+User.create! name: "Pham Van An",
+  email: "andeptrai@gmail.com",
+  code: 2,
+  role: 1,
+  birthday: Faker::Date.birthday(27, 45),
+  password: "123123",
+  password_confirmation: "123123"
+
+User.create! name: "Tran Thi Hoa",
+  email: "hoatran89@gmail.com",
+  code: 3,
+  role: 1,
+  birthday: Faker::Date.birthday(27, 45),
+  password: "123123",
+  password_confirmation: "123123"
+
 
 User.create! name: "Le Hong Phuc",
   email: "lhphuc.ynwa@gmail.com",
   code: 15021472,
   role: 0,
+  birthday: Faker::Date.birthday(20, 22),
   password: "123123",
   password_confirmation: "123123"
 
@@ -23,13 +51,31 @@ User.create! name: "Nguyen Thi Thanh Huyen",
   email: "thanhhuyen.khxhnv@gmail.com",
   code: 15021368,
   role: 0,
+  birthday: Faker::Date.birthday(20, 22),
   password: "123123",
   password_confirmation: "123123"
+
+94.times do
+  name_ = Faker::Name.unique.name_with_middle
+  email = Faker::Internet.unique.user_name + "@gmail.com"
+  code = Faker::Number.unique.number(8)
+  User.create! name: name_,
+  email: email,
+  code: code,
+  role: 0,
+  birthday: Faker::Date.birthday(18, 24),
+  password: "123123",
+  password_confirmation: "123123"
+end
+
+
+SchoolYear.create! year: 2016
 
 SchoolYear.create! year: 2017
 
 SchoolYear.create! year: 2018
 
+
 Semester.create! name: "Hoc ky I",
   school_year_id: 1
 
@@ -42,49 +88,37 @@ Semester.create! name: "Hoc ky I",
 Semester.create! name: "Hoc ky II",
   school_year_id: 2
 
-Lecture.create! name: "Tin hoc co so 4"
+Semester.create! name: "Hoc ky I",
+  school_year_id: 3
 
-Lecture.create! name: "Lap trinh nang cao"
+Semester.create! name: "Hoc ky II",
+  school_year_id: 3
 
-Lecture.create! name: "Dai so"
+Lecture.create! name: "Tin học cơ sở 4", credits: 3
 
-Lecture.create! name: "Giai tich 1"
+Lecture.create! name: "Lập trình nâng cao", credits: 2
 
-Lecture.create! name: "Tri tue nhan tao"
+Lecture.create! name: "Đại số", credits: 3
 
-Course.create! name: "INT5001",
-  user_id: 1,
-  lecture_id: 5,
-  semester_id: 1
+Lecture.create! name: "Giải tích 1", credits: 3
 
-Course.create! name: "INT5003",
-  user_id: 1,
-  lecture_id: 2,
-  semester_id: 2
+Lecture.create! name: "Trí tuệ nhân tạo", credits: 2
 
-Course.create! name: "INT2431",
-  user_id: 1,
-  lecture_id: 1,
-  semester_id: 2
 
-Course.create! name: "INT2301",
-  user_id: 1,
-  lecture_id: 3,
-  semester_id: 2
+30.times do
+  lecture_id = Random.rand(5) + 1
+  user_id = Random.rand(4) + 1
+  name_ = "INT" + lecture_id.to_s + "0" + Faker::Number.unique.number(2)
+  semester_id = Random.rand(6) + 1
+  Course.create! name: name_,
+    user_id: user_id,
+    lecture_id: lecture_id,
+    semester_id: semester_id
+end
 
-Course.create! name: "INT5306",
-  user_id: 1,
-  lecture_id: 4,
-  semester_id: 2
-
-Learning.create! user_id: 2,
-  course_id: 1
-
-Learning.create! user_id: 2,
-  course_id: 2
-
-Learning.create! user_id: 2,
-  course_id: 3
-
-Learning.create! user_id: 2,
-  course_id: 4
+(5..100).each do |user_id|
+  courses_number = Random.rand(5) + 1
+  (1..30).to_a.sample(courses_number).each do |course_id|
+    Learning.create! user_id: user_id, course_id: course_id
+  end
+end

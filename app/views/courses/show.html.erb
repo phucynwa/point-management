@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="col-md-3">
+    <div class="text-center">
+      <%= image_tag "https://www.vnu.edu.vn/upload/2010/08/61/image/VNU-UET.jpg", size: 240 %>
+      <h1>
+        <%= @course.name %><br>
+        <%= @course.lecture.name %>
+      </h1>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-user"></span>
+        &nbsp; Teacher: <%= link_to @course.user.name, @course.user %>
+      </li>
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-envelope"></span>
+        &nbsp; Email: <%= @course.user.email %>
+      </li>
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-gift"></span>
+        &nbsp; Created at: <%= @course.created_at.strftime("%d/%m/%Y") %>
+      </li>
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-list-alt"></span>
+        &nbsp; Nummerator: <%= @course.learnings.count %> students
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <h3>Students</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Student Code</th>
+          <th>Birthday</th>
+          <th>Midterm</th>
+          <th>Final</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @course.learnings.each_with_index do |learning, index| %>
+          <%= render "learnings/learning", learning: learning, index: index %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

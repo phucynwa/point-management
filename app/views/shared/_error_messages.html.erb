@@ -1,7 +1,7 @@
 <% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <%= t ".form_error_warning", count: object.errors.size %>
+      Form has <%= object.errors.size %> error(s).
     </div>
     <ul>
       <% object.errors.full_messages.each do |msg| %>

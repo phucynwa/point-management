@@ -1,14 +1,24 @@
 <div class="container">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-3">
+    <%= render "shared/brand" %>
+    <p class="text-center">
+      <%= link_to "Add a course", new_course_path, class: "btn btn-primary" %>
+    </p>
+  </div>
+  <div class="col-md-9">
+    <h3>All Course</h3>
     <table class="table table-striped">
       <thead>
         <tr>
           <th>Course</th>
           <th>Lecture</th>
+          <th>Teacher</th>
           <th>Semester</th>
           <th>School Year</th>
-          <th>Teacher</th>
-          <th>Action</th>
+          <th>Numerator</th>
+          <% if current_user.student? %>
+            <th>Action</th>
+          <% end %>
         </tr>
       </thead>
       <tbody>

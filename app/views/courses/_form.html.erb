@@ -1,0 +1,19 @@
+<%= form_for @course do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control", placeholder: :name %>
+  </div>
+  <div class="form-group">
+    <%= f.label :lecture %>
+    <%= f.select :lecture_id, @lectures.collect {|lecture| [lecture.name, lecture.id]}, {include_blank: "Select Lecture"},
+    {class: "form-control"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :semester %>
+    <%= f.select :semester_id,  @semesters.collect{
+      |semester| [full_semester(semester), semester.id]},
+      {include_blank: "Select Semester"}, {class: "form-control"} %>
+  </div>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

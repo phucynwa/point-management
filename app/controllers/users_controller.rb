@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_action :load_user, except: %i(new create)
 
   def show
-    @learnings = Learning.by_student @user.id
+    return unless @user.student?
+    @courses = Course.by_time.includes(:learnings).where(learnings:
+      {user_id: @user.id})
   end
 
   def new

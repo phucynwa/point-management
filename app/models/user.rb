@@ -3,6 +3,7 @@ class User < ApplicationRecord
   enum role: [:student, :teacher]
 
   has_many :learnings, dependent: :destroy
+  has_many :courses, dependent: :destroy
   has_secure_password
 
   attr_accessor :remember_token
@@ -10,6 +11,7 @@ class User < ApplicationRecord
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: {case_sensitive: false}
   validates :email, format: {with: VALID_EMAIL_REGEX}
+  validates :code, uniqueness: {case_sensitive: false}
 
   before_save :downcase_email
 

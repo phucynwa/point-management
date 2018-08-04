@@ -1,23 +1,22 @@
-<% provide title: t(".home") %>
-<%= current_user&.name %>
-<ul>
-  <% if logged_in? %>
-    <li>
-      <%= link_to logout_path, data: {hover: t(".log_out")},
-      method: :delete do %>
-      <span><%= t ".log_out" %></span>
-      <% end %>
-    </li>
-    <% else %>
-    <li>
-      <%= link_to login_path, data: {hover: t(".log_in")} do %>
-      <span><%= t ".log_in" %></span>
-      <% end %>
-    </li>
-    <li>
-      <%= link_to signup_path, data: {hover: t(".sign_up")} do %>
-      <span><%= t ".sign_up" %></span>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<div class="container">
+  <div class="col-md-3">
+    <%= render "shared/brand" %>
+  </div>
+  <div class="col-md-9">
+    <h3>All Student</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Student Code</th>
+          <th>Email</th>
+          <th>Birthday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @students %>
+      </tbody>
+    </table>
+    <%= paginate @students, theme: "twitter-bootstrap-3" %>
+  </div>
+</div>

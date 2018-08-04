@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Lecture</th>
+          <th>Credits</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @lectures %>
+      </tbody>
+    </table>
+    <%= paginate @lectures, theme: "twitter-bootstrap-3" %>
+  </div>
+</div>
