@@ -1,14 +1,19 @@
-<% provide :title, "Login" %>
+<% provide :title, "Log in" %>
 <div class="container">
-  <div class="col-md-6">
-    <h3>Sign up</h3>
+  <div class="col-md-3">
+    <%= render "shared/brand" %>
+  </div>
+  <div class="col-md-7 col-md-offset-1">
+    <h3>Login</h3>
     <%= form_for :session, url: login_path do |f| %>
-      <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control" %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: "form-control" %>
-
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
       <div class="form-check">
         <%= f.check_box :remember_me, class: "form-check-input" %>
         <%= f.label :remember_me, class: "form-check-label"%>

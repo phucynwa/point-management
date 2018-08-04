@@ -1,10 +1,12 @@
 class LearningsController < ApplicationController
   before_action :load_learning, only: :destroy
+  before_action :logged_in_user, :student_require
+
   def create
     @learning = Learning.new learning_params
     if @learning.save
       flash[:success] = "Successful !"
-      redirect_to courses_path
+      redirect_to current_user
     else
       flash.now[:warning] = "Fail !"
       render courses_path
@@ -14,7 +16,7 @@ class LearningsController < ApplicationController
   def destroy
     if @learning.destroy
       flash[:success] = "Successful !"
-      redirect_to courses_path
+      redirect_to current_user
     else
       flash[:danger] = "Fail !"
       redirect_to courses_path
@@ -29,7 +31,7 @@ class LearningsController < ApplicationController
 
   def load_learning
     @learning = Learning.find_by id: params[:id]
-    return if @learning
+    return if current_user? @learning.user
     flash[:danger] = "Invalid !"
     redirect_to courses_path
   end

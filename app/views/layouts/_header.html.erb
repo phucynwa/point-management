@@ -18,9 +18,30 @@
             <% end %>
           </li>
           <li>
-            <%= link_to courses_path do %>
-              <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp; Courses
+            <%= link_to lectures_path do %>
+              <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Lectures
             <% end %>
+          </li>
+          <li class="dropdown">
+            <%= link_to "#", class: "dropdown-toggle",
+              data: {toggle: "dropdown"} do %>
+              <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;
+              Courses <span class="caret"></span>
+            <% end %>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to courses_path do %>
+                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; All courses
+                <% end %>
+              </li>
+              <% if current_user&.teacher? %>
+                <li>
+                  <%= link_to new_course_path do %>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add new course
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -36,6 +57,12 @@
                   <%= link_to current_user do %>
                     <span class="glyphicon glyphicon-user"></span>
                     &nbsp; Profile
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to edit_user_path(current_user) do %>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    &nbsp; Settings
                   <% end %>
                 </li>
                 <li class="divider"></li>

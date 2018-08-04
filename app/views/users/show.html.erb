@@ -1,31 +1,68 @@
 <div class="container">
   <div class="col-md-3">
-    <%= gravatar_for @user, size: 240 %>
-    <h1><%= @user.name %></h1>
-    <ul>
-      <li>Student code: <%= @user.code %></li>
-      <li>Email: <%= @user.email %></li>
-      <li>Birthday: <%= @user.birthday ||= "Not exist" %></li>
+    <div class="text-center">
+      <%= gravatar_for @user, size: 240 %>
+      <h1><%= @user.name %></h1>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-user"></span>
+        <% if @user.student? %>
+          &nbsp; Student [<%= @user.code %>]
+        <% else %>
+          &nbsp; Teacher
+        <% end %>
+      </li>
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-envelope"></span>
+        &nbsp; <%= @user.email %>
+      </li>
+      <li class="list-group-item">
+        <span class="glyphicon glyphicon-gift"></span>
+        &nbsp; <%= @user.birthday.strftime("%d/%m/%Y") %></li>
     </ul>
   </div>
   <div class="col-md-9">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Course</th>
-          <th>Lecture</th>
-          <th>Semester</th>
-          <th>Mid. Point</th>
-          <th>Fin. Point</th>
-          <th>Sum. Point</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @learnings.each do |learning| %>
-          <%= render "learning", learning: learning %>
-        <% end %>
-      </tbody>
-    </table>
+    <% if @user.teacher? %>
+      <h3>Teaching</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Lecture</th>
+            <th>Teacher</th>
+            <th>Semester</th>
+            <th>School Year</th>
+            <th>Numerator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @user.courses.order(semester_id: :desc) %>
+        </tbody>
+      </table>
+    <% else %>
+      <h3>Learning</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Lecture</th>
+            <th>Semester</th>
+            <th>School Year</th>
+            <% if current_user? @user %>
+              <th>Midterm</th>
+              <th>Final</th>
+              <th>Summary</th>
+              <th></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.learnings.order(id: :desc).each do |learning| %>
+            <%= render "learning", learning: learning %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>

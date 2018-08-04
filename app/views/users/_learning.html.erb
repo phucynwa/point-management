@@ -1,15 +1,22 @@
 <tr>
-  <td><%= learning.course.name %></td>
-  <td><%= learning.course.lecture.name %></td>
+  <th><%= link_to learning.course.name, learning.course %></th>
+  <th><%= link_to learning.course.lecture.name, learning.course %></th>
   <td>
-    <%= learning.course.semester.name %> -
-    <%= learning.course.semester.school_year.year %>
+    <%= learning.course.semester.name %>
   </td>
-  <td><%= learning.midterm_point ||= "Not exist" %></td>
-  <td><%= learning.final_point ||= "Not exist" %></td>
-  <td><%= learning.summary_point ||= "Not exist" %></td>
   <td>
-    <%= button_to "Remove", learning_path(learning), method: :delete,
-        class: "btn btn-danger" %>
+    <%= full_school_year learning.course.semester.school_year.year %>
   </td>
+  <% if current_user? learning.user %>
+    <td><%= learning.midterm_point %></td>
+    <td><%= learning.final_point %></td>
+    <td><%= learning.summary_point %></td>
+    <td>
+      <%= link_to learning, method: :delete,
+        class: "btn btn-danger" do %>
+        Remove&nbsp;
+        <span class="glyphicon glyphicon-remove"></span>
+      <% end %>
+    </td>
+  <% end %>
 </tr>

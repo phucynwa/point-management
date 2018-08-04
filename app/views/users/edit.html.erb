@@ -1,7 +1,10 @@
 <% provide :title, "Edit info" %>
 <% provide :button_text, "Edit" %>
 <div class="container">
-  <div class="col-md-6 contact-form">
+  <div class="col-md-3">
+    <%= render "shared/brand" %>
+  </div>
+  <div class="col-md-7 col-md-offset-1">
     <h3>Edit info</h3>
     <%= render "form" %>
   </div>
