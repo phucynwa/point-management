@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-  before_action :load_user, except: %i(new create)
+  before_action :logged_in_user, except: %i(index new create)
+  before_action :load_user, except: %i(index new create)
 
-  def show
-    return unless @user.student?
-    @courses = Course.by_time.includes(:learnings).where(learnings:
-      {user_id: @user.id})
+  def index
+    @teachers = User.where(role: :teacher)
   end
+
+  def show; end
 
   def new
     @user = User.new

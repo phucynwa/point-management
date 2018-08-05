@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: @course.name) do |sheet|
+  sheet.add_row ["#",
+    "Name",
+    "Student Code",
+    "Birthday",
+    "Midterm",
+    "Final",
+    "Summary"
+  ]
+  @course.learnings.each_with_index do |learning, index|
+    sheet.add_row [(index + 1),
+      learning.user.name,
+      learning.user.code,
+      learning.user.birthday.strftime("%d/%m/%Y"),
+      learning.midterm_point,
+      learning.final_point,
+      learning.summary_point
+    ]
+  end
+end

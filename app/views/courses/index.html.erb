@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-md-3">
     <%= render "shared/brand" %>
-    <% if current_user.teacher? %>
+    <% if current_user&.teacher? %>
       <p class="text-center">
         <%= link_to "Add a course", new_course_path, class: "btn btn-primary" %>
       </p>

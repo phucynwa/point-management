@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @students = User.where(role: :student).page(params[:page]).per 20
-    @teachers = User.where(role: :teacher).page(params[:page]).per 20
+    course_ids = ActiveStorage::Attachment.where(record_type: Course.name).pluck(:record_id)
+    @courses = Course.find course_ids
   end
 end

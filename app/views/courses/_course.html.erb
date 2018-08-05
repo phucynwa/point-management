@@ -1,13 +1,13 @@
-<tr>
+<tr <%= course.file_upload.attached? ? "class=success" : "" %>>
   <th scope="row"><%= link_to course.name, course %></th>
-  <td><%= course.lecture.name %></td>
+  <td><%= link_to course.lecture.name, course %></td>
   <td><%= link_to course.user.name, course.user %></td>
   <td><%= course.semester.name %></td>
   <td><%= full_school_year course.semester.school_year.year %></td>
   <td><%= course.learnings.count %></td>
-  <% if current_user.student? %>
+  <% if current_user&.student? %>
     <td>
-      <% if learning = current_user.learning?(course) %>
+      <% if learning = current_user&.learning?(course) %>
         <%= button_to learning_path(learning), method: :delete,
           class: "btn btn-danger" do %>
           Remove&nbsp;
@@ -15,7 +15,7 @@
         <% end %>
       <% else %>
         <%= button_to learnings_path, method: :post,
-          params: {course_id: course.id, user_id: current_user.id},
+          params: {course_id: course.id, user_id: current_user&.id},
           class: "btn btn-primary" do %>
           Register&nbsp;
           <span class="glyphicon glyphicon-ok"></span>

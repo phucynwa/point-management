@@ -1,0 +1,45 @@
+<div class="text-center">
+  <%= image_tag "https://www.vnu.edu.vn/upload/2010/08/61/image/VNU-UET.jpg", size: 240 %>
+  <h1><%= link_to @course.name, @course %></h1>
+  <h2><%= @course.lecture.name %></h2>
+</div>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-user"></span>&nbsp;
+    <b>Teacher:</b> <%= link_to @course.user.name, @course.user %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+    <b>Email:</b> <%= @course.user.email %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+    <b>Semester:</b> <%= @course.semester.name %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+    <b>School year:</b> <%= full_school_year @course.semester.school_year.year %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-gift"></span>&nbsp;
+    <b>Created at:</b> <%= @course.created_at.strftime("%d/%m/%Y") %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+    <b>Numerator:</b> <%= @course.learnings.count %> students
+  </li>
+  <li class="list-group-item <%= @course.file_upload.attached? ? "list-group-item-success" : "" %>">
+    <span class="glyphicon glyphicon-download-alt"></span>&nbsp;
+    <b><% if @course.file_upload.attached? %>
+      <%= link_to "Download .XLSX [Points]", @course.file_upload, class: "success" %>
+    <% else %>
+      <%= link_to "Export .XLSX", course_path(@course, format: :xlsx) %>
+    <% end %></b>
+  </li>
+  <% if current_user.teacher? && current_user?(@course.user) %>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-floppy-open"></span>&nbsp;
+    <%= link_to "Update Points", edit_course_path(@course) %>
+  </li>
+  <% end %>
+</ul>

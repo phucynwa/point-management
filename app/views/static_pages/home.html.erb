@@ -3,20 +3,7 @@
     <%= render "shared/brand" %>
   </div>
   <div class="col-md-9">
-    <h3>All Student</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Student</th>
-          <th>Student Code</th>
-          <th>Email</th>
-          <th>Birthday</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @students %>
-      </tbody>
-    </table>
-    <%= paginate @students, theme: "twitter-bootstrap-3" %>
+    <h3>Updated Point</h3>
+    <%= render "courses/courses", courses: @courses %>
   </div>
 </div>

@@ -1,52 +1,24 @@
 <div class="container">
   <div class="col-md-3">
-    <div class="text-center">
-      <%= gravatar_for @user, size: 240 %>
-      <h1><%= @user.name %></h1>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-user"></span>
-        <% if @user.student? %>
-          &nbsp; Student
-        <% else %>
-          &nbsp; Teacher
-        <% end %>
-      </li>
-      <% if @user.student? %>
-        <li class="list-group-item">
-          <span class="glyphicon glyphicon-qrcode"></span>
-          &nbsp; <%= @user.code %>
-        </li>
-      <% end %>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-envelope"></span>
-        &nbsp; <%= @user.email %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-gift"></span>
-        &nbsp; <%= @user.birthday.strftime("%d/%m/%Y") %></li>
-    </ul>
+    <%= render "brand" %>
   </div>
   <div class="col-md-9">
-    <% if @user.teacher? %>
-      <h3><span class="glyphicon glyphicon-briefcase"></span> Teaching</h3>
-      <%= render "courses", courses: courses %>
-    <% else %>
-      <h3><span class="glyphicon glyphicon-education"></span> Learning</h3>
-      <%= render "learnings", learnings: @user.learnings %>
-      <hr>
-      <% SchoolYear.all.order(year: :desc).each do |school_year| %>
-        <h3>
+    <% SchoolYear.all.order(year: :desc).each do |school_year| %>
+      <fieldset>
+        <legend><h3>
           <span class="glyphicon glyphicon-calendar"></span>
           <%= full_school_year school_year.year %>
-        </h3>
-        <% school_year.semesters.each do |semester| %>
-          <h4><%= semester.name %></h4>
-          <%= render "learnings", learnings: semester.learnings.where(user_id:
-            @user.id) %>
+        </h3></legend>
+        <% school_year.semesters.order(id: :desc).each do |semester| %>
+          <b><%= semester.name %></b>
+          <% if @user.student? %>
+            <%= render "learnings", learnings: semester.learnings.where(user_id:
+              @user.id) %>
+          <% else %>
+            <%= render "courses/courses", courses: @user.courses.where(semester_id: semester.id) %>
+          <% end %>
         <% end %>
-      <% end %>
+      </fieldset>
     <% end %>
   </div>
 </div>

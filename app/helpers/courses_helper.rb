@@ -6,4 +6,8 @@ module CoursesHelper
   def full_semester semester
     semester.name + " (" + full_school_year(semester.school_year.year) + ")"
   end
+
+  def full_xlsx_name course
+    course.name << "-" << course.lecture.name.gsub(' ', '-')
+  end
 end

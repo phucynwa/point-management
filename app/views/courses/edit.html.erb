@@ -1,0 +1,82 @@
+<% provide :title, "Update point for " + @course.name %>
+<% provide :button_text, "Edit" %>
+<div class="container">
+  <div class="col-md-3">
+    <%= render "brand" %>
+  </div>
+  <div class="col-md-7 col-md-offset-1">
+    <h3>Update point</h3>
+    <%= form_for @course  do |f| %>
+      <div class="form-group">
+        <%= f.label :file_upload %>
+        <div class="input-group">
+          <label class="input-group-btn">
+            <span class="btn btn-primary">
+              Browse&hellip;
+              <%= f.file_field :file_upload, style: "display: none;" %>
+            </span>
+          </label>
+          <input type="text" class="form-control" placeholder="Choose .xlsx file..." readonly>
+        </div>
+      </div>
+      <%= f.submit "Upload File", class: "btn btn-primary"%>
+    <% end %>
+    <% if @course.file_upload.attached? %>
+      <hr>
+      <h3>Current File</h3>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+              <%= link_to @course.file_upload do %>
+                <span class="glyphicon glyphicon-file"></span>&nbsp;
+                <%= @course.file_upload.filename %>
+              <% end %>
+            </td>
+            <td><%= @course.file_upload.created_at.strftime("%H:%m %d/%m/%Y") %></td>
+            <td><%= number_to_human_size(File.size(ActiveStorage::Blob.service.send(:path_for, @course.file_upload.blob.key))) %></td>
+          </tr>
+        </tbody>
+      </table>
+      <% spreadsheet = Learning.open_spreadsheet @course.file_upload %>
+      <table class="table table-bordered">
+        <tbody>
+          <% (1..spreadsheet.last_row).each do |row| %>
+            <tr>
+            <% (1..spreadsheet.last_column).each do |col| %>
+              <% if col.in? [1, 3] %>
+                <td><%= spreadsheet.cell(row, col).to_i %></td>
+              <% else %>
+                <td><%= spreadsheet.cell(row, col).to_s %></td>
+              <% end %>
+            <% end%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+    // We can attach the `fileselect` event to all file inputs on the page
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+        var input = $(this).parents('.input-group').find(':text'),
+        log = numFiles > 1 ? numFiles + ' files selected' : label;
+        if( input.length ) {
+          input.val(log);
+        } else {
+          if( log ) alert(log);
+        }
+      });
+    });
+  });
+</script>
