@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   include SessionsHelper
 
   def logged_in_user
@@ -10,19 +11,19 @@ class ApplicationController < ActionController::Base
 
   def not_logged_in_user
     return unless logged_in?
-    flash[:warning] = "Invalid ! 2"
+    flash[:warning] = "Invalid !"
     redirect_to root_path
   end
 
   def student_require
     return if current_user.student?
-    flash[:warning] = "Invalid ! 3"
+    flash[:warning] = "Invalid !"
     redirect_to root_path
   end
 
   def teacher_require
     return if current_user.teacher?
-    flash[:warning] = "Invalid ! 4"
+    flash[:warning] = "Invalid !"
     redirect_to root_path
   end
 end

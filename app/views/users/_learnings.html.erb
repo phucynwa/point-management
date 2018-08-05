@@ -1,21 +1,24 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th class="col-md-1">Course</th>
-      <th class="col-md-3">Lecture</th>
-      <th class="col-md-1">Semester</th>
-      <th class="col-md-2">Year</th>
-      <% if current_user? @user %>
-        <th class="col-md-1">Mid.</th>
-        <th class="col-md-1">Fin.</th>
-        <th class="col-md-1">Sum.</th>
-        <th></th>
+<% if learnings.present? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-md-3">Lecture</th>
+        <th class="col-md-2">Course</th>
+        <th class="col-md-2">Teacher</th>
+        <% if current_user? @user %>
+          <th class="col-md-1">Mid.</th>
+          <th class="col-md-1">Fin.</th>
+          <th class="col-md-1">Sum.</th>
+        <% end %>
+        <th class="col-md-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% learnings.order(id: :desc).each do |learning| %>
+        <%= render "learning", learning: learning %>
       <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% learnings.order(id: :desc).each do |learning| %>
-    <%= render "learning", learning: learning %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+<% else %>
+  <div class="well well-sm">Cannot found any course.</div>
+<% end %>

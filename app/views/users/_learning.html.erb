@@ -1,22 +1,41 @@
-<tr>
-  <th><%= link_to learning.course.name, learning.course %></th>
-  <th><%= link_to learning.course.lecture.name, learning.course %></th>
-  <td>
-    <%= learning.course.semester.name %>
-  </td>
-  <td>
-    <%= full_school_year learning.course.semester.school_year.year %>
-  </td>
+<% mylearning = current_user&.learning?(learning.course) %>
+<tr class="<%= "success" if learning.course.file_upload.attached? %><%= " text-bold" if (mylearning || learning.course.teach_by?(current_user)) %>">
+  <td><%= link_to learning.course.lecture.name, learning.course %></td>
+  <td><%= link_to learning.course.name, learning.course %></td>
+  <td><%= link_to learning.course.user.name, learning.course.user %></td>
   <% if current_user? learning.user %>
     <td><%= learning.midterm_point %></td>
     <td><%= learning.final_point %></td>
     <td><%= learning.summary_point %></td>
-    <td>
+  <% end %>
+  <td class="text-right">
+    <% if current_user? learning.user %>
       <%= link_to learning, method: :delete,
         class: "btn btn-danger" do %>
         Remove&nbsp;
         <span class="glyphicon glyphicon-remove"></span>
       <% end %>
-    </td>
-  <% end %>
+    <% elsif current_user&.student? %>
+      <% if mylearning %>
+        <%= button_to learnings_path(mylearning), method: :delete,
+          class: "btn btn-danger" do %>
+          Remove&nbsp;
+          <span class="glyphicon glyphicon-remove"></span>
+        <% end %>
+      <% else %>
+        <%= button_to learnings_path, method: :post,
+          params: {course_id: learning.course.id, user_id: current_user&.id},
+          class: "btn btn-primary" do %>
+          Register&nbsp;
+          <span class="glyphicon glyphicon-ok"></span>
+        <% end %>
+      <% end %>
+    <% elsif learning.course.teach_by?(current_user) %>
+      <%= link_to edit_course_path(learning.course),
+        class: "btn btn-primary" do %>
+        Update Points&nbsp;
+        <span class="glyphicon glyphicon-upload"></span>
+      <% end %>
+    <% end %>
+  </td>
 </tr>

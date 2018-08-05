@@ -1,50 +1,54 @@
 <div class="container">
   <div class="col-md-3">
-    <div class="text-center">
-      <%= image_tag "https://www.vnu.edu.vn/upload/2010/08/61/image/VNU-UET.jpg", size: 240 %>
-      <h1>
-        <%= @course.name %><br>
-        <%= @course.lecture.name %>
-      </h1>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-user"></span>
-        &nbsp; Teacher: <%= link_to @course.user.name, @course.user %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-envelope"></span>
-        &nbsp; Email: <%= @course.user.email %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-gift"></span>
-        &nbsp; Created at: <%= @course.created_at.strftime("%d/%m/%Y") %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-list-alt"></span>
-        &nbsp; Nummerator: <%= @course.learnings.count %> students
-      </li>
-    </ul>
+    <%= render "brand" %>
   </div>
   <div class="col-md-9">
-    <h3>Students</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Student Code</th>
-          <th>Birthday</th>
-          <th>Midterm</th>
-          <th>Final</th>
-          <th>Summary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @course.learnings.each_with_index do |learning, index| %>
-          <%= render "learnings/learning", learning: learning, index: index %>
+    <fieldset>
+      <legend>
+        <h3>
+          <span class="glyphicon glyphicon-transfer"></span>&nbsp;Similar courses <small>(<%= full_school_year @course.school_year.year %>)</small>
+        </h3>
+      </legend>
+      <ul class="nav nav-tabs">
+        <% @course.lecture.courses.where(semester_id: @course.semester_id).each do |course| %>
+          <li<%= course == @course ? ' class=active' : '' %>>
+            <%= link_to course.name, course %>
+          </li>
         <% end %>
-      </tbody>
-    </table>
+      </ul>
+    </fieldset>
+    <fieldset>
+      <legend>
+        <h3><span class="glyphicon glyphicon-education"></span> Students (<%= @course.learnings.count %>)</h3>
+      </legend>
+      <%= form_tag @course, remote: true, method: :get do %>
+        <div class="input-group">
+          <input type="text" name="name" class="form-control" value="" placeholder="Search student in this course...">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+              <span class="glyphicon glyphicon-search"></span>&nbsp; Search
+            </button>
+          </span>
+        </div>
+      <% end %>
+      <hr>
+      <div id="notice-search"></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Student Code</th>
+            <th>Birthday</th>
+            <th>Midterm</th>
+            <th>Final</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody id="students-result">
+          <%= render @learnings %>
+        </tbody>
+      </table>
+    </fieldset>
   </div>
 </div>

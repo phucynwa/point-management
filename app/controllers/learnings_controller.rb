@@ -8,8 +8,8 @@ class LearningsController < ApplicationController
       flash[:success] = "Successful !"
       redirect_to current_user
     else
-      flash.now[:warning] = "Fail !"
-      render courses_path
+      flash[:warning] = "Fail !"
+      redirect_to courses_path
     end
   end
 

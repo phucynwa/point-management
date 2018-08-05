@@ -1,0 +1,51 @@
+<div class="text-center">
+  <%= image_tag "https://www.vnu.edu.vn/upload/2010/08/61/image/VNU-UET.jpg", size: 240 %>
+  <h1><%= link_to @course.name, @course %></h1>
+  <h2><%= @course.lecture.name %></h2>
+</div>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-user"></span>&nbsp;
+    <b>Teacher:</b> <%= link_to @course.user.name, @course.user %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+    <b>Email:</b> <%= @course.user.email %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+    <b>Semester:</b> <%= @course.semester.name %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+    <b>School year:</b> <%= full_school_year @course.semester.school_year.year %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-gift"></span>&nbsp;
+    <b>Created at:</b> <%= @course.created_at.strftime("%d/%m/%Y") %>
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+    <b>Numerator:</b> <%= @course.learnings.count %> students
+  </li>
+  <li class="list-group-item">
+    <span class="glyphicon glyphicon-credit-card"></span>&nbsp;
+    <b>Credits number:</b> <%= @course.lecture.credits %>
+  </li>
+</ul>
+<% if current_user? @course.user %>
+  <%= link_to edit_course_path(@course), class: "btn btn-primary btn-block" do %>
+    <span class="glyphicon glyphicon-floppy-open"></span>&nbsp;
+    Update Points
+  <% end %>
+<% end %>
+<% if @course.file_upload.attached? %>
+  <%= link_to @course.file_upload, class: "btn btn-success btn-block" do %>
+    <span class="glyphicon glyphicon-save-file"></span>&nbsp; Export .XLSX
+    (<%= number_to_human_size(File.size(ActiveStorage::Blob.service.send(:path_for, @course.file_upload.blob.key))) %>)
+  <% end %>
+<% end %>
+<%= link_to course_path(@course, format: :xlsx), class: "btn btn-default btn-block" do %>
+  <span class="glyphicon glyphicon-copy"></span>&nbsp;Download .XLSX (Blank)
+<% end %>
+<%= render "layouts/search_users" %>

@@ -3,7 +3,8 @@ class User < ApplicationRecord
   enum role: [:student, :teacher]
 
   has_many :learnings, dependent: :destroy
-  has_many :courses, through: :learnings
+  has_many :courses
+
   has_secure_password
 
   attr_accessor :remember_token

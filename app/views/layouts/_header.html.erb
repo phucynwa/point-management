@@ -8,21 +8,21 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/" style="padding: 3px;margin-right: 1em">Point Management</a>
+        <a class="navbar-brand" href="/" style="padding: 3px;margin-right: 1em"><img src="http://hasagi.com/images/logo_hasagi_white.png" style="width: 9em; height: auto;" alt="Logo Hasagi.com"></a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active">
+          <li class="<%= yield :static_pages %>">
             <%= link_to root_path do %>
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp; Home
             <% end %>
           </li>
-          <li>
+          <li class="<%= yield :lectures %>">
             <%= link_to lectures_path do %>
               <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Lectures
             <% end %>
           </li>
-          <li class="dropdown">
+          <li class="dropdown <%= yield :courses %>">
             <%= link_to "#", class: "dropdown-toggle",
               data: {toggle: "dropdown"} do %>
               <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;
@@ -32,6 +32,11 @@
               <li>
                 <%= link_to courses_path do %>
                   <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; All courses
+                <% end %>
+              </li>
+              <li>
+                <%= link_to current_user do %>
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp; My courses
                 <% end %>
               </li>
               <% if current_user&.teacher? %>
@@ -46,7 +51,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
-            <li class="dropdown">
+            <li class="dropdown <%= yield :users %>">
               <%= link_to "#", class: "dropdown-toggle",
                 data: {toggle: "dropdown"} do %>
                 <%= gravatar_for current_user, size: 36 %>
@@ -62,7 +67,13 @@
                 <li>
                   <%= link_to edit_user_path(current_user) do %>
                     <span class="glyphicon glyphicon-cog"></span>
-                    &nbsp; Settings
+                    &nbsp; Setting
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to users_path do %>
+                    <span class="glyphicon glyphicon-certificate"></span>
+                    &nbsp; Teachers
                   <% end %>
                 </li>
                 <li class="divider"></li>

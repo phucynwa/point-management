@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
   get "signup", to: "users#new"
   post "signup", to: "users#create"
-  resources :users, except: %i(index destroy)
-  resources :courses, except: %i(edit update destroy)
+  resources :users, except: :destroy
+  resources :courses, except: :destroy
   resources :learnings, except: %i(edit update)
   resources :lectures, except: %i(edit update)
 end
