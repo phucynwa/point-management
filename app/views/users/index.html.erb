@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="col-md-3">
+    <%= render "shared/brand" %>
+  </div>
+  <div class="col-md-9">
+    <h3>All Teacher</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Birthday</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @teachers %>
+      </tbody>
+    </table>
+  </div>
+</div>

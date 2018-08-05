@@ -1,33 +1,17 @@
 <div class="container">
   <div class="col-md-3">
-    <div class="text-center">
-      <%= image_tag "https://www.vnu.edu.vn/upload/2010/08/61/image/VNU-UET.jpg", size: 240 %>
-      <h1>
-        <%= @course.name %><br>
-        <%= @course.lecture.name %>
-      </h1>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-user"></span>
-        &nbsp; Teacher: <%= link_to @course.user.name, @course.user %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-envelope"></span>
-        &nbsp; Email: <%= @course.user.email %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-gift"></span>
-        &nbsp; Created at: <%= @course.created_at.strftime("%d/%m/%Y") %>
-      </li>
-      <li class="list-group-item">
-        <span class="glyphicon glyphicon-list-alt"></span>
-        &nbsp; Nummerator: <%= @course.learnings.count %> students
-      </li>
-    </ul>
+    <%= render "brand" %>
   </div>
   <div class="col-md-9">
-    <h3>Students</h3>
+    <h3><span class="glyphicon glyphicon-transfer"></span> Similar courses</h3>
+    <ul class="nav nav-tabs">
+      <% @course.lecture.courses.where(semester_id: @course.semester_id).each do |course| %>
+        <li<%= course == @course ? ' class=active' : '' %>>
+          <%= link_to course.name, course %>
+        </li>
+      <% end %>
+    </ul>
+    <h3><span class="glyphicon glyphicon-education"></span> Students (<%= @course.learnings.count %>)</h3>
     <table class="table">
       <thead>
         <tr>
