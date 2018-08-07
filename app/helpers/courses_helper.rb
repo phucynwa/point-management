@@ -14,11 +14,5 @@ course.name << "-" << course.lecture.name.gsub(' ', '-')
   def sort_vietnamese
     vietnamese_symbols = "AĂÂBCDĐEÊGHIKLMNOÔƠPQRSTUƯVXY"
     word = "SUBSTRING_INDEX(users.name, ' ', -1)"
-    sort = word
-    sort << ", CASE"
-    vietnamese_symbols.length.times do |index|
-      sort << " WHEN #{word} LIKE '#{vietnamese_symbols[index]}%' THEN #{index + 1} \n"
-    end
-    sort << "END"
   end
 end

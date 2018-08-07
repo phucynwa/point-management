@@ -1,5 +1,5 @@
 <% mylearning = current_user&.learning?(learning.course) %>
-<tr class="<%= "success" if learning.course.file_upload.attached? %><%= " text-bold" if (mylearning || learning.course.teach_by?(current_user)) %>">
+<tr class="<%= "success" if learning.course.file_upload.attached? %>">
   <td><%= link_to learning.course.lecture.name, learning.course %></td>
   <td><%= link_to learning.course.name, learning.course %></td>
   <td><%= link_to learning.course.user.name, learning.course.user %></td>

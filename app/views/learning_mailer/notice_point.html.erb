@@ -1,0 +1,27 @@
+<h1><%= @learning.course.name %> has been updated points !</h1>
+<p>
+  Hello <%= @learning.user.name %>,
+</p>
+<p>
+  Your points is in this below table.
+  <table width="100%" cellspacing="1" align="center" bgcolor="black">
+    <thead bgcolor="white">
+      <tr>
+        <th height="30" width="25%">Name</th>
+        <th width="15%">Student Code</th>
+        <th width="15%">Birthday</th>
+        <th>Midterm Point</th>
+        <th>Final Point</th>
+        <th>Summary Point</th>
+      </tr>
+    </thead>
+    <tbody bgcolor="white" align="center">
+      <td height="30"><%= @learning.user.name %></td>
+      <td><%= @learning.user.code %></td>
+      <td><%= @learning.user.birthday.strftime "%d/%m/%Y" %></td>
+      <td><b><%= @learning.midterm_point %></b></td>
+      <td><b><%= @learning.final_point %></b></td>
+      <td><b><%= @learning.summary_point %></b></td>
+    </tbody>
+  </table>
+</p>
