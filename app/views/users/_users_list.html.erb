@@ -1,0 +1,15 @@
+<% if users.present? %>
+  <ul class="list-group">
+    <% users.each do |user| %>
+      <li class="list-group-item"><%= link_to user.name, user, class: "text-bold" %> <span class="badge-code"><%= user.student? ? user.code : "Teacher" %></span></li>
+    <% end %>
+  </ul>
+  <ul class="pager">
+    <li class="previous">
+      <%= link_to_previous_page(@users, "Previous", remote: true) %>
+    </li>
+    <li class="next"><%= link_to_next_page(@users, "Next", remote: true) %></li>
+  </ul>
+<% else %>
+  <div class="well well-sm">Cannot found any course.</div>
+<% end %>

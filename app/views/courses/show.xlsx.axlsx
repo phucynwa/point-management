@@ -8,8 +8,8 @@ wb.add_worksheet(name: @course.name) do |sheet|
     "Final",
     "Summary"
   ]
-  @course.learnings.each_with_index do |learning, index|
-    sheet.add_row [(index + 1),
+  @learnings.each do |learning|
+    sheet.add_row [learning.id,
       learning.user.name,
       learning.user.code,
       learning.user.birthday.strftime("%d/%m/%Y"),

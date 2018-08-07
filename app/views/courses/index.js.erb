@@ -1,0 +1,3 @@
+$('#search-courses-result').html('<div class="alert alert-info">Found <%= @courses_count %> course(s) with keyword "<%= @keyword %>".</div></legend><%= j render "courses/courses", courses: @courses.order(:semester_id).order(:lecture_id) %><div class="text-center"><%= j paginate(@courses, theme: "twitter-bootstrap-3", remote: true) %></div>').appendTo('#search-courses-result');
+$('.in.active').removeClass('in active');
+$('.active').removeClass('active');

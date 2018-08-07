@@ -34,6 +34,11 @@
                   <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; All courses
                 <% end %>
               </li>
+              <li>
+                <%= link_to current_user do %>
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp; My courses
+                <% end %>
+              </li>
               <% if current_user&.teacher? %>
                 <li>
                   <%= link_to new_course_path do %>

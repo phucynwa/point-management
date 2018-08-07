@@ -28,18 +28,24 @@
     <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
     <b>Numerator:</b> <%= @course.learnings.count %> students
   </li>
-  <li class="list-group-item <%= @course.file_upload.attached? ? "list-group-item-success" : "" %>">
-    <span class="glyphicon glyphicon-download-alt"></span>&nbsp;
-    <b><% if @course.file_upload.attached? %>
-      <%= link_to "Download .XLSX [Points]", @course.file_upload, class: "success" %>
-    <% else %>
-      <%= link_to "Export .XLSX", course_path(@course, format: :xlsx) %>
-    <% end %></b>
-  </li>
-  <% if current_user.teacher? && current_user?(@course.user) %>
   <li class="list-group-item">
-    <span class="glyphicon glyphicon-floppy-open"></span>&nbsp;
-    <%= link_to "Update Points", edit_course_path(@course) %>
+    <span class="glyphicon glyphicon-credit-card"></span>&nbsp;
+    <b>Credits number:</b> <%= @course.lecture.credits %>
   </li>
-  <% end %>
 </ul>
+<% if current_user? @course.user %>
+  <%= link_to edit_course_path(@course), class: "btn btn-primary btn-block" do %>
+    <span class="glyphicon glyphicon-floppy-open"></span>&nbsp;
+    Update Points
+  <% end %>
+<% end %>
+<% if @course.file_upload.attached? %>
+  <%= link_to @course.file_upload, class: "btn btn-success btn-block" do %>
+    <span class="glyphicon glyphicon-save-file"></span>&nbsp; Export .XLSX
+    (<%= number_to_human_size(File.size(ActiveStorage::Blob.service.send(:path_for, @course.file_upload.blob.key))) %>)
+  <% end %>
+<% end %>
+<%= link_to course_path(@course, format: :xlsx), class: "btn btn-default btn-block" do %>
+  <span class="glyphicon glyphicon-copy"></span>&nbsp;Download .XLSX (Blank)
+<% end %>
+<%= render "layouts/search_users" %>

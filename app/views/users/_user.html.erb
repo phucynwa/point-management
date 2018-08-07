@@ -4,6 +4,9 @@
       <%= gravatar_for user, size: 36 %>&nbsp; <%= user.name %>
     <% end %>
   </td>
+  <td>
+    <%= user.student? ? user.code : "Teacher" %>
+  </td>
   <td><%= user.email %></td>
   <td><%= user.birthday.strftime("%d/%m/%Y") %></td>
 </tr>

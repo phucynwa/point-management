@@ -1,6 +1,9 @@
 class Learning < ApplicationRecord
   belongs_to :course
   belongs_to :user
+
+  delegate :lecture, to: :course, allow_nil: true
+
   scope :by_student, ->(student_id){where user_id: student_id}
 
   validates :user, uniqueness: {scope: :course}

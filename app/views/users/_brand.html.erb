@@ -1,27 +1,31 @@
-<% provide :user, "active" %>
 <div class="text-center">
-  <%= gravatar_for @user, size: 240 %>
+  <%= gravatar_for user, size: 240 %>
   <h1>
-    <%= link_to @user.name, @user %>
+    <%= link_to user.name, user %>
   </h1>
 </div>
 <ul class="list-group">
   <li class="list-group-item">
     <span class="glyphicon glyphicon-user"></span>&nbsp;
-    <%= @user.student? ? " Student" : raw(" Teacher <span class=\"glyphicon glyphicon-ok-sign\"></span>") %>
+    <%= user.student? ? " Student" : "Teacher" %>
   </li>
-  <% if @user.student? %>
-  <li class="list-group-item">
-    <span class="glyphicon glyphicon-qrcode"></span>&nbsp;
-    <%= @user.code %>
-  </li>
-  <% end %>
   <li class="list-group-item">
     <span class="glyphicon glyphicon-envelope"></span>&nbsp;
-    <%= @user.email %>
+    <%= user.email %>
   </li>
   <li class="list-group-item">
     <span class="glyphicon glyphicon-gift"></span>&nbsp;
-    <%= @user.birthday.strftime("%d/%m/%Y") %>
+    <%= user.birthday.strftime("%d/%m/%Y") %>
   </li>
-  </ul>
+  <% if user.student? %>
+    <li class="list-group-item">
+      <span class="glyphicon glyphicon-qrcode"></span>&nbsp;
+      <%= user.code %>
+    </li>
+    <li class="list-group-item">
+      <span class="glyphicon glyphicon-credit-card"></span>&nbsp;
+      <%= Course.joins(:learnings).where("learnings.user_id": user.id).joins(:lecture).sum("lectures.credits") %> credits
+    </li>
+  <% end %>
+</ul>
+<%= render "layouts/search_users" %>

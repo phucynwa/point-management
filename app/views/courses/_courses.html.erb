@@ -1,18 +1,22 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Course</th>
-      <th>Lecture</th>
-      <th>Teacher</th>
-      <th>Semester</th>
-      <th>School Year</th>
-      <th>Numerator</th>
-      <% if current_user&.student? %>
-        <th>Action</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render courses %>
-  </tbody>
-</table>
+<% if courses.present? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-md-3">Lecture</th>
+        <th class="text-center">Course</th>
+        <th class="text-center">Teacher</th>
+        <th class="text-center">Semester</th>
+        <th class="text-center">School Year</th>
+        <th class="text-center">Numerator</th>
+        <% if current_user %>
+          <th class="text-center">Action</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render courses %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="well well-sm">Cannot found any course.</div>
+<% end %>

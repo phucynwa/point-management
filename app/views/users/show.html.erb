@@ -1,21 +1,26 @@
 <div class="container">
   <div class="col-md-3">
-    <%= render "brand" %>
+    <%= render "brand", user: @user %>
   </div>
   <div class="col-md-9">
     <% SchoolYear.all.order(year: :desc).each do |school_year| %>
       <fieldset>
-        <legend><h3>
-          <span class="glyphicon glyphicon-calendar"></span>
-          <%= full_school_year school_year.year %>
-        </h3></legend>
+        <legend>
+          <h3>
+            <span class="glyphicon glyphicon-calendar"></span>
+            <%= full_school_year school_year.year %>
+          </h3>
+        </legend>
         <% school_year.semesters.order(id: :desc).each do |semester| %>
-          <b><%= semester.name %></b>
+          <h4>
+            <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+            <%= semester.name %>
+          </h4>
           <% if @user.student? %>
             <%= render "learnings", learnings: semester.learnings.where(user_id:
               @user.id) %>
           <% else %>
-            <%= render "courses/courses", courses: @user.courses.where(semester_id: semester.id) %>
+            <%= render "courses/courses", courses: @user.courses.where(semester_id: semester.id).order(lecture_id: :desc) %>
           <% end %>
         <% end %>
       </fieldset>

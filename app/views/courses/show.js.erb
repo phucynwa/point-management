@@ -1,0 +1,2 @@
+$('#students-result').html('<%= j render @learnings %>').appendTo('#students-result');
+$('#notice-search').html('<div class="alert alert-info">Found <%= @learnings.count %> student(s) with name "<%= @name %>".</div>').appendTo('#notice-search');

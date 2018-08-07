@@ -1,14 +1,17 @@
-<tr <%= course.file_upload.attached? ? "class=success" : "" %>>
-  <th scope="row"><%= link_to course.name, course %></th>
-  <td><%= link_to course.lecture.name, course %></td>
-  <td><%= link_to course.user.name, course.user %></td>
-  <td><%= course.semester.name %></td>
-  <td><%= full_school_year course.semester.school_year.year %></td>
-  <td><%= course.learnings.count %></td>
-  <% if current_user&.student? %>
-    <td>
-      <% if learning = current_user&.learning?(course) %>
-        <%= button_to learning_path(learning), method: :delete,
+<% learning = current_user&.learning?(course) %>
+<tr class="<%= "success" if course.file_upload.attached? %><%= " text-bold" if (learning) %>">
+  <td>
+    <%= link_to course.lecture.name, course %>
+  </td>
+  <td class="text-center"><%= link_to course.name, course %></td>
+  <td class="text-center"><%= link_to course.user.name, course.user %></td>
+  <td class="text-center"><%= course.semester.name %></td>
+  <td class="text-center"><%= full_school_year course.semester.school_year.year %></td>
+  <td class="text-center"><%= course.learnings.count %></td>
+  <td class="text-center">
+    <% if current_user&.student? %>
+      <% if learning %>
+        <%= button_to learnings_path(learning), method: :delete,
           class: "btn btn-danger" do %>
           Remove&nbsp;
           <span class="glyphicon glyphicon-remove"></span>
@@ -21,6 +24,11 @@
           <span class="glyphicon glyphicon-ok"></span>
         <% end %>
       <% end %>
-    </td>
-  <% end %>
+    <% elsif course.teach_by?(current_user) %>
+      <%= link_to edit_course_path(course), class: "btn btn-primary" do %>
+        Update Points&nbsp;
+        <span class="glyphicon glyphicon-upload"></span>
+      <% end %>
+    <% end %>
+  </td>
 </tr>

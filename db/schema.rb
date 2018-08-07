@@ -12,17 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2018_08_04_140426) do
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,11 +33,11 @@ ActiveRecord::Schema.define(version: 2018_08_04_140426) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "courses", force: :cascade do |t|
+  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
-    t.integer "lecture_id"
-    t.integer "semester_id"
+    t.bigint "user_id"
+    t.bigint "lecture_id"
+    t.bigint "semester_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lecture_id"], name: "index_courses_on_lecture_id"
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 2018_08_04_140426) do
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
-  create_table "learnings", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "course_id"
+  create_table "learnings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "course_id"
     t.float "midterm_point"
     t.float "final_point"
     t.float "summary_point"
@@ -57,28 +57,28 @@ ActiveRecord::Schema.define(version: 2018_08_04_140426) do
     t.index ["user_id"], name: "index_learnings_on_user_id"
   end
 
-  create_table "lectures", force: :cascade do |t|
+  create_table "lectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "credits"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "school_years", force: :cascade do |t|
+  create_table "school_years", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "semesters", force: :cascade do |t|
+  create_table "semesters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "school_year_id"
+    t.bigint "school_year_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_year_id"], name: "index_semesters_on_school_year_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "code"
     t.string "email"
@@ -90,4 +90,10 @@ ActiveRecord::Schema.define(version: 2018_08_04_140426) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "courses", "lectures"
+  add_foreign_key "courses", "semesters"
+  add_foreign_key "courses", "users"
+  add_foreign_key "learnings", "courses"
+  add_foreign_key "learnings", "users"
+  add_foreign_key "semesters", "school_years"
 end

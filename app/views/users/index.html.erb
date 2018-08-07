@@ -1,21 +1,63 @@
 <div class="container">
   <div class="col-md-3">
-    <%= render "shared/brand" %>
+    <%= render "layouts/brand" %>
   </div>
   <div class="col-md-9">
-    <h3>All Teacher</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Birthday</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @teachers %>
-      </tbody>
-    </table>
+    <form action="<%= users_path %>" method="get">
+      <div class="input-group">
+        <input type="text" name="name" class="form-control" value="<%= @name %>" placeholder="Search user...">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-search"></span> Search
+          </button>
+        </span>
+      </div>
+    </form>
+    <hr>
+    <ul class="nav nav-tabs">
+      <li class="<%= "active" if @name || params[:page] %>">
+        <a href="#tab-students" data-toggle="tab">
+            <strong>Users</strong>
+        </a>
+      </li>
+      <li class="<%= "active" unless @name || params[:page] %>">
+        <a href="#tab-teachers" data-toggle="tab">
+            <strong>Teachers</strong>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="tab-students" class="tab-pane fade <%= " in active" if @name || params[:page] %>">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Student Code</th>
+              <th>Email</th>
+              <th>Birthday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render @users %>
+          </tbody>
+        </table>
+        <%= paginate @users, theme: "twitter-bootstrap-3" %>
+      </div>
+      <div id="tab-teachers" class="tab-pane fade <%= " in active" unless @name || params[:page] %>">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+              <th>Email</th>
+              <th>Birthday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render @teachers %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

@@ -5,6 +5,11 @@
  margin: 90px 0 70px;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .gravatar {
   border-radius: 50%;
 }
@@ -58,4 +63,16 @@ a:hover {
   background: white;
   cursor: inherit;
   display: block;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+#search-users-result {
+  margin-top: 20px;
+}
+
+.badge-code {
+  float: right;
 }

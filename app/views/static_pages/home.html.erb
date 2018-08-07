@@ -1,9 +1,18 @@
 <div class="container">
   <div class="col-md-3">
-    <%= render "shared/brand" %>
+    <%= render "layouts/brand" %>
   </div>
   <div class="col-md-9">
-    <h3>Updated Point</h3>
-    <%= render "courses/courses", courses: @courses %>
+    <blockquote class="blockquote-reverse">
+      <p>Nếu học không giỏi, đừng nhận làm đồ đệ của ta !</p>
+      <footer>Yasuo</footer>
+    </blockquote>
+    <%= render "layouts/search_courses" %>
+    <fieldset>
+      <legend>
+        <h3><span class="glyphicon glyphicon-fire"></span> Updated points</h3>
+      </legend>
+      <%= render "courses/courses", courses: @courses %>
+    </fieldset>
   </div>
 </div>

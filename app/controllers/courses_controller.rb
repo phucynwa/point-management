@@ -6,12 +6,40 @@ class CoursesController < ApplicationController
   before_action :own_teacher, only: %i(edit update)
 
   def index
-    @courses = Course.by_semester.page(params[:page]).per 20
+    if params[:keyword]
+      @keyword = params[:keyword].delete("'")
+      keyword1 = @keyword.tr("dD ", "%%%")
+      keyword = safe_keyword @keyword
+      @courses = Course.joins(:lecture).joins(:user).where("(CONCAT('lớp', lectures.name, 'thầy cô giáo viên giảng viên:', users.name) LIKE '%#{keyword1}%') OR (CONCAT('lớp', users.name, lectures.name, courses.name, 'thầy cô giáo viên giảng viên:', users.name, lectures.name) LIKE '%#{keyword}%')").order(semester_id: :desc).distinct
+      @courses_count = @courses.count
+      @courses = @courses.page(params[:page]).per 10
+    else
+      @courses = Course.by_semester.page(params[:page]).per 20
+    end
+    respond_to do |format|
+      format.html {render :index}
+      format.js {}
+    end
   end
 
   def show
+    @learnings = @course.learnings.joins(:user).order(sort_vietnamese)
+    numerator = {}
+    @learnings.each_with_index do |learning, index|
+      numerator[learning.id] = index + 1
+      learning.id = numerator[learning.id]
+    end
+    if params[:name]
+      @name = params[:name]
+      name = safe_keyword @name
+      @learnings = @learnings.where("name LIKE '%#{name}%'")
+      @learnings.each do |learning|
+        learning.id = numerator[learning.id]
+      end
+    end
     respond_to do |format|
       format.html
+      format.js {}
       format.xlsx {
         response.headers["Content-Disposition"] = "attachment; filename=\"#{@course.name}.xlsx\""
       }

@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :learnings, dependent: :destroy
   has_many :courses
+
   has_secure_password
 
   attr_accessor :remember_token

@@ -1,0 +1,12 @@
+<hr>
+<%= form_tag users_path, remote: true, method: :get do %>
+  <div class="input-group">
+    <input type="text" name="name" class="form-control" value="<%= @name %>" placeholder="Search user...">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="submit">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+<% end %>
+<div id="search-users-result"></div>

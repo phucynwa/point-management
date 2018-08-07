@@ -4,6 +4,14 @@ class UsersController < ApplicationController
 
   def index
     @teachers = User.where(role: :teacher)
+    @name = params[:name]
+    name = safe_keyword @name
+    @users = User.where("name LIKE '%#{name}%'")
+    @users = @users.page(params[:page]).per 10
+    respond_to do |format|
+      format.html {render :index}
+      format.js {}
+    end
   end
 
   def show; end
