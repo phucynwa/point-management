@@ -1,6 +1,6 @@
 <tr>
   <th><%= lecture.id %></th>
-  <td><%= lecture.name %></td>
+  <td><%= link_to lecture.name, lecture %></td>
   <td><%= lecture.credits %></td>
   <td><%= lecture.courses.count %></td>
 </tr>

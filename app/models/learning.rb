@@ -3,6 +3,7 @@ class Learning < ApplicationRecord
   belongs_to :user
 
   delegate :lecture, to: :course, allow_nil: true
+  delegate :semester, to: :course, allow_nil: true
 
   scope :by_student, ->(student_id){where user_id: student_id}
 
@@ -18,6 +19,9 @@ class Learning < ApplicationRecord
           midterm_point: spreadsheet.cell(i, 'E'),
           final_point: spreadsheet.cell(i, 'F'),
           summary_point: spreadsheet.cell(i, 'G'))
+      end
+      learnings.each do |learning|
+        SendEmailJob.delay.perform_later(learning)
       end
     end
 

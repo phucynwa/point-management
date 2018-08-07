@@ -1,11 +1,12 @@
+<% provide :title, "Courses" %>
 <div class="container">
   <div class="col-md-3">
     <%= render "layouts/brand" %>
     <% if current_user&.teacher? %>
       <hr>
       <%= link_to new_course_path, class: "btn btn-primary btn-block" do %>
-        <span class="glyphicon glyphicon-plus"></span>&nbsp;
-        Add a course
+        <span class="glyphicon glyphicon-plus"></span>
+        <%= t "courses.add_course" %>
       <% end %>
     <% end %>
   </div>
@@ -26,7 +27,7 @@
             <% school_year.semesters.order(:id).each do |semester| %>
               <hr>
               <h4>
-                <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+                <span class="glyphicon glyphicon-tasks"></span>
                 <%= semester.name %>
               </h4>
               <%= render "courses/courses", courses: @courses.where(semester_id: semester.id).order(:lecture_id) %>

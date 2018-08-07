@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, except: %i(index new create)
+  before_action :not_logged_in_user, only: :new
   before_action :load_user, except: %i(index new create)
 
   def index

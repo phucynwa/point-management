@@ -3,10 +3,11 @@
   <td><%= link_to learning.course.lecture.name, learning.course %></td>
   <td><%= link_to learning.course.name, learning.course %></td>
   <td><%= link_to learning.course.user.name, learning.course.user %></td>
+  <td class="text-center"><%= learning.lecture.credits %></td>
   <% if current_user? learning.user %>
-    <td><%= learning.midterm_point %></td>
-    <td><%= learning.final_point %></td>
-    <td><%= learning.summary_point %></td>
+    <td class="text-center"><%= learning.midterm_point %></td>
+    <td class="text-center"><%= learning.final_point %></td>
+    <td class="text-center text-bold"><%= learning.summary_point %></td>
   <% end %>
   <td class="text-right">
     <% if current_user? learning.user %>

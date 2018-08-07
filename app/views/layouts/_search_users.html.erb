@@ -1,7 +1,7 @@
 <hr>
-<%= form_tag users_path, remote: true, method: :get do %>
+<%= form_tag users_path, remote: true, method: :get, id: "search-users-form" do %>
   <div class="input-group">
-    <input type="text" name="name" class="form-control" value="<%= @name %>" placeholder="Search user...">
+    <input type="text" name="name" id="search-users-input" class="form-control" value="" placeholder="<%= t ".holder" %>">
     <span class="input-group-btn">
       <button class="btn btn-primary" type="submit">
         <span class="glyphicon glyphicon-search"></span>

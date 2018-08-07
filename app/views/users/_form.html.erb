@@ -6,12 +6,22 @@
   </div>
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.email_field :email, class: "form-control", placeholder: :name %>
+    <% unless current_page? signup_path %>
+      <%= f.email_field :email, class: "form-control", placeholder: :email, disabled: :disabled %>
+    <% else %>
+      <%= f.email_field :email, class: "form-control", placeholder: :email %>
+    <% end %>
   </div>
-  <div class="form-group">
-    <%= f.label :code %>
-    <%= f.number_field :code, class: "form-control", placeholder: :code %>
-  </div>
+  <% if current_user&.student? %>
+    <div class="form-group">
+      <%= f.label :code %>
+      <% unless current_page? signup_path %>
+        <%= f.number_field :code, class: "form-control", placeholder: :code, disabled: :disabled %>
+      <% else %>
+        <%= f.number_field :code, class: "form-control", placeholder: :code %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= f.label :birthday %>
     <%= f.date_field :birthday, class: "form-control", placeholder: :birthday %>
@@ -19,7 +29,7 @@
   <div class="form-group">
     <%= f.label :password %>
     <%= f.password_field :password, class: "form-control",
-      placeholder: "Password" %>
+      placeholder: :password %>
   </div>
   <div class="form-group">
     <%= f.label :password_confirmation %>

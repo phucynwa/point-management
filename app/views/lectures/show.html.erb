@@ -1,0 +1,14 @@
+<% provide :title, @lecture.name %>
+<div class="container">
+  <div class="col-md-3">
+    <%= render "layouts/brand" %>
+  </div>
+  <div class="col-md-9">
+    <fieldset>
+      <legend>
+        <h3><span class="glyphicon glyphicon-blackboard"></span> Courses of <%= @lecture.name %></h3>
+      </legend>
+      <%= render "courses/courses", courses: @lecture.courses %>
+    </fieldset>
+  </div>
+</div>
