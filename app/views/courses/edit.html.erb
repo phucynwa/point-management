@@ -5,15 +5,15 @@
     <%= render "brand" %>
   </div>
   <div class="col-md-7 col-md-offset-1">
-    <h3>Update point</h3>
+    <h3><%= t "courses.update_points" %></h3>
     <%= form_for @course  do |f| %>
       <div class="form-group">
         <%= f.label :file_upload %>
         <div class="input-group">
           <label class="input-group-btn">
             <span class="btn btn-primary">
-              <span class="glyphicon glyphicon-folder-open"></span>&nbsp
-              Browse&hellip;
+              <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+              <%= t ".browse" %>&hellip;
               <%= f.file_field :file_upload, style: "display: none;" %>
             </span>
           </label>

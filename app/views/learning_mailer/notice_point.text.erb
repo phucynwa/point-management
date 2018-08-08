@@ -1,7 +1,7 @@
-<%= @learning.course.name %> has been updated points !
-Hello <%= @learning.user.name %>
+<%= t ".title", course_name: @learning.course.name %>
+<%= t ".hello", user_name: @learning.user.name %>
 
-This is your points.
-Midterm Point: <%= @learning.midterm_point %>
-Final Point: <%= @learning.final_point %>
-Summary Point: <%= @learning.summary_point %>
+<%= t ".these_point" %>
+<%= t "midterm_point" %>: <%= @learning.midterm_point %>
+<%= t "final_point" %>: <%= @learning.final_point %>
+<%= t "summary_point" %>: <%= @learning.summary_point %>

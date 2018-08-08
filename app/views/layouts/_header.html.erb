@@ -12,37 +12,42 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="<%= yield :static_pages %>">
+          <li class="<%= "active" if controller_name == "static_pages" %>">
             <%= link_to root_path do %>
-              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp; Home
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <%= t "home" %>
             <% end %>
           </li>
-          <li class="<%= yield :lectures %>">
+          <li class="<%= "active" if controller_name == "lectures" %>">
             <%= link_to lectures_path do %>
-              <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Lectures
+              <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+              <%= t "lectures" %>
             <% end %>
           </li>
-          <li class="dropdown <%= yield :courses %>">
+          <li class="dropdown <%= "active" if controller_name == "courses" %>">
             <%= link_to "#", class: "dropdown-toggle",
               data: {toggle: "dropdown"} do %>
-              <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;
-              Courses <span class="caret"></span>
+              <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+              <%= t "courses_" %> <span class="caret"></span>
             <% end %>
             <ul class="dropdown-menu">
               <li>
                 <%= link_to courses_path do %>
-                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; All courses
+                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;
+                  <%= t "all_courses" %>
                 <% end %>
               </li>
               <li>
                 <%= link_to current_user do %>
-                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp; My courses
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;
+                  <%= t "my_courses" %>
                 <% end %>
               </li>
               <% if current_user&.teacher? %>
                 <li>
                   <%= link_to new_course_path do %>
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add new course
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+                    <%= t "courses.add_course" %>
                   <% end %>
                 </li>
               <% end %>
@@ -51,7 +56,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
-            <li class="dropdown <%= yield :users %>">
+            <li class="dropdown <%= "active" if controller_name == "users" %>">
               <%= link_to "#", class: "dropdown-toggle",
                 data: {toggle: "dropdown"} do %>
                 <%= gravatar_for current_user, size: 36 %>
@@ -60,42 +65,42 @@
               <ul class="dropdown-menu">
                 <li>
                   <%= link_to current_user do %>
-                    <span class="glyphicon glyphicon-user"></span>
-                    &nbsp; Profile
+                    <span class="glyphicon glyphicon-user"></span>&nbsp;
+                    <%= t "profile" %>
                   <% end %>
                 </li>
                 <li>
                   <%= link_to edit_user_path(current_user) do %>
-                    <span class="glyphicon glyphicon-cog"></span>
-                    &nbsp; Setting
+                    <span class="glyphicon glyphicon-cog"></span>&nbsp;
+                    <%= t "setting" %>
                   <% end %>
                 </li>
                 <li>
                   <%= link_to users_path do %>
-                    <span class="glyphicon glyphicon-certificate"></span>
-                    &nbsp; Teachers
+                    <span class="glyphicon glyphicon-certificate"></span>&nbsp;
+                    <%= t "teacher" %>
                   <% end %>
                 </li>
                 <li class="divider"></li>
                 <li>
                   <%= link_to logout_path, method: :delete do %>
-                    <span class="glyphicon glyphicon-log-out"></span>
-                    &nbsp; Log Out
+                    <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                    <%= t "logout" %>
                   <% end %>
                 </li>
               </ul>
             </li>
           <% else %>
-            <li>
+            <li class="<%= "active" if current_page? signup_path %>">
               <%= link_to signup_path do %>
                 <span class="glyphicon glyphicon-new-window"></span>
-                &nbsp; Sign Up
+                <%= t "signup" %>
               <% end %>
             </li>
-            <li>
+            <li class="<%= "active" if current_page? login_path %>">
               <%= link_to login_path do %>
                 <span class="glyphicon glyphicon-log-in"></span>
-                &nbsp; Log In
+                <%= t "login" %>
               <% end %>
             </li>
           <% end %>

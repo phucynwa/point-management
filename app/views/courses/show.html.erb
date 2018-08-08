@@ -1,3 +1,4 @@
+<% provide :title, @course.name + " - " + @course.lecture.name %>
 <div class="container">
   <div class="col-md-3">
     <%= render "brand" %>
@@ -6,7 +7,8 @@
     <fieldset>
       <legend>
         <h3>
-          <span class="glyphicon glyphicon-transfer"></span>&nbsp;Similar courses <small>(<%= full_school_year @course.school_year.year %>)</small>
+          <span class="glyphicon glyphicon-transfer"></span>
+          <%= t ".similar_courses" %> <small>(<%= full_school_year @course.school_year.year %>)</small>
         </h3>
       </legend>
       <ul class="nav nav-tabs">
@@ -19,14 +21,18 @@
     </fieldset>
     <fieldset>
       <legend>
-        <h3><span class="glyphicon glyphicon-education"></span> Students (<%= @course.learnings.count %>)</h3>
+        <h3>
+          <span class="glyphicon glyphicon-education"></span>
+          <%= t ".students" %> (<%= @course.learnings.count %>)
+        </h3>
       </legend>
-      <%= form_tag @course, remote: true, method: :get do %>
+      <%= form_tag @course, remote: true, method: :get, id: "search-in-course-form" do %>
         <div class="input-group">
-          <input type="text" name="name" class="form-control" value="" placeholder="Search student in this course...">
+          <input type="text" name="name" id="search-in-course-input" class="form-control" value="" placeholder="Search student in this course...">
           <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">
-              <span class="glyphicon glyphicon-search"></span>&nbsp; Search
+              <span class="glyphicon glyphicon-search"></span>
+              <%= t "search" %>
             </button>
           </span>
         </div>
@@ -37,12 +43,12 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Student Code</th>
-            <th>Birthday</th>
-            <th>Midterm</th>
-            <th>Final</th>
-            <th>Summary</th>
+            <th><%= t "name" %></th>
+            <th><%= t "student_code" %></th>
+            <th><%= t "birthday" %></th>
+            <th><%= t "midterm_point" %></th>
+            <th><%= t "final_point" %></th>
+            <th><%= t "summary_point" %></th>
           </tr>
         </thead>
         <tbody id="students-result">

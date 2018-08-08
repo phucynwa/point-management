@@ -3,7 +3,7 @@
   <td>
     <%= link_to learning.user do %>
       <%= gravatar_for learning.user, size: 36 %>
-      &nbsp; <%= learning.user.name %>
+      <%= learning.user.name %>
     <% end %>
   </td>
   <td><%= learning.user.code %></td>
@@ -14,8 +14,8 @@
   <% if current_user? learning.user && current_user.student? %>
     <td>
       <%= button_to learning_path(learning), method: :delete,
-        class: "btn btn-danger" do %>
-        Remove&nbsp;
+        data: {confirm: t("you_sure")}, class: "btn btn-danger" do %>
+        <%= t "remove" %>
         <span class="glyphicon glyphicon-remove"></span>
       <% end %>
     </td>

@@ -2,16 +2,16 @@
   <legend>
     <h3>
       <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
-      Search a course
+      <%= t ".search_course" %>
     </h3>
   </legend>
-  <%= form_tag courses_path, remote: true, method: :get do %>
+  <%= form_tag courses_path, remote: true, method: :get, id: "search-courses-form" do %>
     <div class="input-group">
-      <input type="text" name="keyword" class="form-control" value="<%= @keyword %>" placeholder="Search by course, lecture or teacher...">
+      <input type="text" name="keyword" id="search-courses-input" class="form-control" value="<%= @keyword %>" placeholder="<%= t ".holder" %>">
       <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
-          Search
+          <span class="glyphicon glyphicon-search"></span>
+          <%= t "search" %>
         </button>
       </span>
     </div>

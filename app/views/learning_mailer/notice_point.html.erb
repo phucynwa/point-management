@@ -1,18 +1,18 @@
-<h1><%= @learning.course.name %> has been updated points !</h1>
+<h1><%= t ".title", course_name: @learning.course.name %></h1>
 <p>
-  Hello <%= @learning.user.name %>,
+  <%= t ".hello", user_name: @learning.user.name %>
 </p>
 <p>
-  Your points is in this below table.
+  <%= t ".your_point_below" %>
   <table width="100%" cellspacing="1" align="center" bgcolor="black">
     <thead bgcolor="white">
       <tr>
-        <th height="30" width="25%">Name</th>
-        <th width="15%">Student Code</th>
-        <th width="15%">Birthday</th>
-        <th>Midterm Point</th>
-        <th>Final Point</th>
-        <th>Summary Point</th>
+        <th height="30" width="25%"><%= t "name" %></th>
+        <th width="15%"><%= t "student_code" %></th>
+        <th width="15%"><%= t "birthday" %></th>
+        <th><%= t "midterm_point" %></th>
+        <th><%= t "final_point" %></th>
+        <th><%= t "summary_point" %></th>
       </tr>
     </thead>
     <tbody bgcolor="white" align="center">
@@ -24,4 +24,8 @@
       <td><b><%= @learning.summary_point %></b></td>
     </tbody>
   </table>
+</p>
+<p>
+  <%= t ".click_link_below" %><br>
+  <%= link_to "Click here", @learning.course %>
 </p>

@@ -76,3 +76,13 @@ a:hover {
 .badge-code {
   float: right;
 }
+
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #eeeeee;
+    color: gray;
+    text-align: center;
+}

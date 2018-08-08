@@ -1,3 +1,4 @@
+<% provide :title, @user.name %>
 <div class="container">
   <div class="col-md-3">
     <%= render "brand", user: @user %>
@@ -9,16 +10,21 @@
           <h3>
             <span class="glyphicon glyphicon-calendar"></span>
             <%= full_school_year school_year.year %>
+            <% if @user.student? && current_user?(@user) %>
+              (<span class="text-danger"><%= avg_point(school_year.learnings.where(user_id: @user.id)).ceil(2) %></span>)
+            <% end %>
           </h3>
         </legend>
         <% school_year.semesters.order(id: :desc).each do |semester| %>
           <h4>
             <span class="glyphicon glyphicon-tasks"></span>&nbsp;
             <%= semester.name %>
+            <% if @user.student? && current_user?(@user) %>
+              (<span class="text-danger"><%= avg_point(@user.learnings.joins(:course).where("courses.semester_id": semester.id)).ceil(2) %></span>)
+            <% end %>
           </h4>
           <% if @user.student? %>
-            <%= render "learnings", learnings: semester.learnings.where(user_id:
-              @user.id) %>
+            <%= render "learnings", learnings: @user.learnings.joins(:course).where("courses.semester_id": semester.id) %>
           <% else %>
             <%= render "courses/courses", courses: @user.courses.where(semester_id: semester.id).order(lecture_id: :desc) %>
           <% end %>

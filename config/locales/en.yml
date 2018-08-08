@@ -1,33 +1,60 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
   hello: "Hello world"
+  lecture: "Lecture"
+  lectures: "Lectures"
+  course: "Course"
+  courses_: "Courses"
+  all_courses: "All Courses"
+  my_courses: "My Courses"
+  email: "Email"
+  teacher: "Teacher"
+  semester: "Semester"
+  school_year: "School year"
+  numerator: "Numerator"
+  action: "Action"
+  students: "Students"
+  search: "Search"
+  home: "Home"
+  profile: "Profile"
+  setting: "Setting"
+  login: "Log In"
+  logout: "Log Out"
+  signup: "Sign Up"
+  name: "Name"
+  student_code: "Student Code"
+  birthday: "Birthday"
+  midterm_point: "Midterm Point"
+  final_point: "Final Point"
+  summary_point: "Summary Point"
+  remove: "Remove"
+  register: "Register"
+  you_sure: "Are you sure ?"
+  courses:
+    update_points: "Update Points"
+    add_course: "Add a Course"
+    brand:
+      created_at: "Created at"
+      credits_number: "Credits number"
+      download_xlsx: "Download .XLSX"
+      export_xlsx: "Export .XLSX (Blank)"
+      student_count:
+        zero: "No student"
+        one: "1 student"
+        other: "%{count} students"
+    edit:
+      browse: "Browse"
+  layouts:
+    brand:
+      university: "University of Engineering & Technology"
+    search_courses:
+      holder: "Search by course, lecture or teacher..."
+      search_course: "Search a Course"
+    search_users:
+      holder: "Search user..."
+    learning_mailer:
+      notice_point:
+        title: "%{course_name} has been updated points !"
+        hello: "Hello %{user_name},"
+        your_point_below: "Your points is in this below table."
+        these_point: "These are your points."
+        click_link: "To see full points table, please click link below:"
